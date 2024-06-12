@@ -14,7 +14,7 @@ class loker
       $search_query ="";
       // jika pencarian berjalan
       if($search != null){
-         $search_query = "and (judul like  '%".$search."%' or tgl_pinjam like  '%".$search."%' or tgl_kembali like  '%".$search."%' ) ";
+         $search_query = "and (no_loker like  '%".$search."%' or tgl_pinjam like  '%".$search."%' or tgl_kembali like  '%".$search."%' ) ";
       }
 
       // untuk halaman pagination
@@ -24,7 +24,6 @@ class loker
       if($start != null ){
          $query .= "LIMIT ".$length." OFFSET ".$start;
       }
-
 
       $data = array();
       $result = $mysqli->query($query);
@@ -53,7 +52,7 @@ class loker
             // get total filtered
             $total_filtered =$total;
             if($search != null ){
-               $query_total_filtered ="SELECT count(b.judul) as jumlah FROM transaksi a LEFT JOIN  buku b ON a.`kd_buku` = b.kd_buku  WHERE a.no_mhs=" . $no_mhs." and (judul like  '%".$search."%' or tgl_pinjam like  '%".$search."%' or tgl_kembali like  '%".$search."%' ) "; 
+               $query_total_filtered ="SELECT count(tgl_pinjam) as jumlah FROM recordtrx  WHERE id_anggota=" . $no_mhs." and (no_loker like  '%".$search."%' or tgl_pinjam like  '%".$search."%' or tgl_kembali like  '%".$search."%' ) "; 
                $result_total_filtered = $mysqli->query($query_total_filtered);
                $total_filtered = mysqli_fetch_object($result_total_filtered);
             } 

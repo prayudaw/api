@@ -47,7 +47,7 @@ class pintumasuk
             // get total filtered
             $total_filtered =$total;
             if($search != null ){
-               $query_total_filtered ="SELECT count(waktu_kunjung) as jumlah FROM pengunjung   WHERE ano_mhs=" . $no_mhs." and (judul waktu_kunjung  '%".$search."%') "; 
+               $query_total_filtered ="SELECT count(waktu_kunjung) as jumlah FROM pengunjung   WHERE no_mhs=" . $no_mhs." and (waktu_kunjung LIKE  '%".$search."%') "; 
                $result_total_filtered = $mysqli->query($query_total_filtered);
                $total_filtered = mysqli_fetch_object($result_total_filtered);
             } 

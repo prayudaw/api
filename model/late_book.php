@@ -14,7 +14,7 @@ class late_book
          global $mysqli;
 
          // $query = "SELECT no_mhs,tgl_kembali,tgl_dikembalikan, CURDATE() AS date_now FROM transaksi  WHERE  DATE(tgl_kembali) < CURDATE() AND DATE(tgl_dikembalikan) = '0000-00-00' ORDER BY tgl_kembali DESC";
-         $query = "SELECT kd_buku,no_mhs, tgl_kembali , tgl_dikembalikan FROM transaksi WHERE tgl_kembali < CURDATE() AND tgl_dikembalikan = '0000-00-00' ORDER BY tgl_kembali DESC LIMIT 2";
+         $query = "SELECT kd_buku,no_mhs, tgl_kembali , tgl_dikembalikan FROM transaksi WHERE tgl_kembali < CURDATE() AND tgl_dikembalikan = '0000-00-00' ORDER BY tgl_kembali DESC";
          $data = array();
          $result = $mysqli->query($query);
          $num_rows = mysqli_num_rows($result);

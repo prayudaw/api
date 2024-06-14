@@ -173,9 +173,6 @@ class transaksi
             'message' => 'Data Tidak ada',
          );
       }
-
-
-
          header('Content-Type: application/json');
          echo json_encode($response);
    }

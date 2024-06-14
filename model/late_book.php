@@ -3,14 +3,18 @@
 // ini_set('display_startup_errors', '1');
 // error_reporting(E_ALL);
 require_once "database/koneksi.php";
+require_once "hitung_denda.php";
+
+
 
 class late_book
-{
+{   
     public function get_data_mhs_telat(){
+        $denda = new Hitung();
          global $mysqli;
 
          // $query = "SELECT no_mhs,tgl_kembali,tgl_dikembalikan, CURDATE() AS date_now FROM transaksi  WHERE  DATE(tgl_kembali) < CURDATE() AND DATE(tgl_dikembalikan) = '0000-00-00' ORDER BY tgl_kembali DESC";
-         $query = "SELECT kd_buku,no_mhs, tgl_kembali , tgl_dikembalikan FROM transaksi WHERE tgl_kembali < CURDATE() AND tgl_dikembalikan = '0000-00-00'";
+         $query = "SELECT kd_buku,no_mhs, tgl_kembali , tgl_dikembalikan FROM transaksi WHERE tgl_kembali < CURDATE() AND tgl_dikembalikan = '0000-00-00' ORDER BY tgl_kembali DESC LIMIT 2";
          $data = array();
          $result = $mysqli->query($query);
          $num_rows = mysqli_num_rows($result);
@@ -19,6 +23,7 @@ class late_book
             $nestedData['kd_buku']= $row->kd_buku;
             $nestedData['no_mhs']= $row->no_mhs;
             $nestedData['tgl_kembali']= $row->tgl_kembali;
+            $nestedData['denda']= $denda->hitung_denda($row->tgl_kembali);
             $nestedData['tgl_dikembalikan']= $row->tgl_dikembalikan; 
              $data[] = $nestedData;
           }
@@ -31,5 +36,10 @@ class late_book
      header('Content-Type: application/json');
      echo json_encode($response);
     }
+
+
+
+
+
 
 }

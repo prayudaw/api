@@ -21,7 +21,7 @@ class transaksi
       }
       // untuk halaman pagination
       if ($no_mhs != 0) {
-         $query .= " WHERE a.no_mhs=" . $no_mhs . " " . $search_query . " Order by a.tgl_pinjam DESC ";
+         $query .= " WHERE a.no_mhs='" . $no_mhs . "' " . $search_query . " Order by a.tgl_pinjam DESC ";
       }
       if ($start != null) {
          $query .= "LIMIT " . $length . " OFFSET " . $start;
@@ -53,7 +53,7 @@ class transaksi
       $query_total = "SELECT count(b.judul) as jumlah FROM transaksi a LEFT JOIN  buku b ON a.`kd_buku` = b.kd_buku";
       // jika pencarian berjalan
       if ($no_mhs != 0) {
-         $query_total .= " WHERE a.no_mhs=" . $no_mhs;
+         $query_total .= " WHERE a.no_mhs='" . $no_mhs . "'";
       }
       $result_total = $mysqli->query($query_total);
       $total = mysqli_fetch_object($result_total);
@@ -111,7 +111,7 @@ class transaksi
       $query_total = "SELECT count(judul) as jumlah FROM skripsi";
       // jika pencarian berjalan
       if ($no_mhs != 0) {
-         $query_total .= " WHERE nim=" . $no_mhs;
+         $query_total .= " WHERE nim='" . $no_mhs . "'";
       }
       $result_total = $mysqli->query($query_total);
       $total = mysqli_fetch_object($result_total);
@@ -171,6 +171,7 @@ class transaksi
       global $mysqli;
       $query = "SELECT a.*,b.judul FROM transaksi a LEFT JOIN  buku b ON a.`kd_buku` = b.kd_buku  WHERE no_mhs='" . $no_mhs . "' AND tgl_dikembalikan = '0000-00-00' ";
       $data = array();
+      die($query);
       $result = $mysqli->query($query);
       $num_rows = mysqli_num_rows($result);
 

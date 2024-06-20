@@ -171,7 +171,6 @@ class transaksi
       global $mysqli;
       $query = "SELECT a.*,b.judul FROM transaksi a LEFT JOIN  buku b ON a.`kd_buku` = b.kd_buku  WHERE no_mhs='" . $no_mhs . "' AND tgl_dikembalikan = '0000-00-00' ";
       $data = array();
-      die($query);
       $result = $mysqli->query($query);
       $num_rows = mysqli_num_rows($result);
 

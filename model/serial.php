@@ -39,6 +39,7 @@ class serial
       if ($no_mhs != 0) {
          $query_total .= " AND nim ='" . $no_mhs . "'";
       }
+      
       $result_total = $mysqli->query($query_total);
       $total = mysqli_fetch_object($result_total);
 

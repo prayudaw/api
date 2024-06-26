@@ -1,12 +1,10 @@
 <?php 
 require_once "database/koneksi.php";
 
-class serial 
+class referensi 
 { 
     public function get_pengunjung($no_mhs = 0, $start = null, $length = null,  $search = null)
-   {
-
-    //   $denda = new Hitung();
+   {  
       global $mysqli;
       $query = "SELECT * FROM visit ";
 
@@ -17,12 +15,12 @@ class serial
       }
       // untuk halaman pagination
       if ($no_mhs != 0) {
-         $query .= " WHERE nim='" . $no_mhs . "' AND lokasi = 'serial' " . $search_query . " Order by waktu DESC ";
+         $query .= " WHERE nim='" . $no_mhs . "' AND lokasi = 'referensi' " . $search_query . " Order by waktu DESC ";
       }
       if ($start != null) {
          $query .= "LIMIT " . $length . " OFFSET " . $start;
       }
-
+      
       $data = array();
       $result = $mysqli->query($query);
       $num_rows = mysqli_num_rows($result);
@@ -33,7 +31,7 @@ class serial
       }
 
       //query get total
-      $query_total = "SELECT count(nim) as jumlah FROM visit WHERE lokasi= 'serial' ";
+      $query_total = "SELECT count(nim) as jumlah FROM visit WHERE lokasi= 'referensi' ";
       // jika pencarian berjalan
       if ($no_mhs != 0) {
          $query_total .= " AND nim ='" . $no_mhs . "'";
@@ -45,7 +43,7 @@ class serial
       // get total filtered
       $total_filtered = $total;
       if ($search != null) {
-         $query_total_filtered = "SELECT count(nim) as jumlah FROM visit WHERE nim ='" . $no_mhs . "' AND lokasi= 'serial' AND ( waktu like  '%" . $search . "%') ";
+         $query_total_filtered = "SELECT count(nim) as jumlah FROM visit WHERE nim ='" . $no_mhs . "' AND lokasi= 'referensi' AND ( waktu like  '%" . $search . "%') ";
          $result_total_filtered = $mysqli->query($query_total_filtered);
          $total_filtered = mysqli_fetch_object($result_total_filtered);
       }
@@ -62,10 +60,10 @@ class serial
       echo json_encode($response);
    }
 
-   public function get_total_pengunjung_serial($no_mhs)
-   {
+   public function get_total_pengunjung_referensi($no_mhs)
+   {  
       global $mysqli;
-      $query_total = "SELECT count(nim) as jumlah FROM visit WHERE lokasi = 'serial'";
+      $query_total = "SELECT count(nim) as jumlah FROM visit WHERE lokasi = 'referensi'";
       // jika pencarian berjalan
     
       if ($no_mhs != 0) {

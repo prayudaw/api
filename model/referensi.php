@@ -1,10 +1,10 @@
-<?php 
+<?php
 require_once "database/koneksi.php";
 
-class referensi 
-{ 
-    public function get_pengunjung($no_mhs = 0, $start = null, $length = null,  $search = null)
-   {  
+class referensi
+{
+   public function get_pengunjung($no_mhs = 0, $start = null, $length = null,  $search = null)
+   {
       global $mysqli;
       $query = "SELECT * FROM visit ";
 
@@ -20,7 +20,7 @@ class referensi
       if ($start != null) {
          $query .= "LIMIT " . $length . " OFFSET " . $start;
       }
-      
+
       $data = array();
       $result = $mysqli->query($query);
       $num_rows = mysqli_num_rows($result);
@@ -36,7 +36,7 @@ class referensi
       if ($no_mhs != 0) {
          $query_total .= " AND nim ='" . $no_mhs . "'";
       }
-      
+
       $result_total = $mysqli->query($query_total);
       $total = mysqli_fetch_object($result_total);
 
@@ -61,11 +61,11 @@ class referensi
    }
 
    public function get_total_pengunjung_referensi($no_mhs)
-   {  
+   {
       global $mysqli;
       $query_total = "SELECT count(nim) as jumlah FROM visit WHERE lokasi = 'referensi'";
       // jika pencarian berjalan
-    
+
       if ($no_mhs != 0) {
          $query_total .= " AND nim ='" . $no_mhs . "'";
       }
@@ -75,10 +75,4 @@ class referensi
       $data = (int)$total->jumlah;
       echo $data;
    }
-
-
-
-    
 }
-
-?>

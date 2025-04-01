@@ -1,7 +1,5 @@
 <?php
-// ini_set('display_errors', '1');
-// ini_set('display_startup_errors', '1');
-// error_reporting(E_ALL);
+
 require_once "database/koneksi.php";
 require_once "hitung_denda.php";
 
@@ -13,11 +11,24 @@ class late_book
         global $mysqli;
 
         // $query = "SELECT no_mhs,tgl_kembali,tgl_dikembalikan, CURDATE() AS date_now FROM transaksi  WHERE  DATE(tgl_kembali) < CURDATE() AND DATE(tgl_dikembalikan) = '0000-00-00' ORDER BY tgl_kembali DESC";
-        $query = "SELECT a.no_mhs,b.`nama` FROM transaksi a LEFT JOIN anggota b ON a.`no_mhs` = b.`no_mhs` WHERE tgl_kembali < CURDATE() 
-            AND tgl_dikembalikan = '0000-00-00' 
-            GROUP BY no_mhs 
-            ORDER BY tgl_kembali DESC 
-            LIMIT 3";
+        $query = "SELECT 
+            a.no_mhs AS nim,
+            b.nama AS nm,
+            a.no_barcode,
+            a.tgl_pinjam AS tp,
+            a.tgl_kembali AS tk,
+            c.judul AS j,
+            TO_DAYS(CURRENT_DATE()) - TO_DAYS(a.tgl_kembali) AS jml_telat 
+            FROM
+            transaksi a,
+            anggota b,
+            buku c 
+            WHERE a.tgl_dikembalikan = '0000-00-00'  
+            AND a.tgl_kembali = DATE_FORMAT(CURRENT_DATE()-1,'%Y-%m-%d')
+            -- AND (  TO_DAYS(CURRENT_DATE()) - TO_DAYS(a.tgl_kembali)) > 500 
+            AND b.no_mhs = a.no_mhs 
+            AND c.kd_buku = a.kd_buku 
+            ORDER BY a.tgl_kembali DESC";
 
         $data = array();
         $result = $mysqli->query($query);
